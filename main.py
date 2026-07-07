@@ -14,6 +14,13 @@ pygame.display.set_caption("Snake_Eater_Game")
 clock = pygame.time.Clock()
 
 # Create the snake only once
+# This is the list data structure[], like arrays but with the difference of list being highly flexible in python.
+# Lists are dynamically resized and can hold mixed data types.
+### Snake structure ###
+# snake[0] = Head
+# snake[1:] = Body + Tail
+#
+# Body segments are added when food is eaten.
 snake = [
 pygame.Rect(100, 100, 20, 20)
 ]
@@ -22,9 +29,9 @@ pygame.Rect(100, 100, 20, 20)
 food = pygame.Rect(300, 300, 20, 20) # 300, 300 is the center for the first food piece
 
 score = 0
-font = pygame.font.Font(None, 30) # This prints score to the game window instead of just terminal, the 10 is font size
+font = pygame.font.Font(None, 30) # This prints score to the game window instead of just terminal, The 30 font size and also parameter value, More specifcally, an arguement passed to the function. 
 speed = 20
-game_over = False
+game_over = False # This game_over, win and later on grow = False are all examples of State managment. A SWE concept about state machines.
 win = False
 
 dx = 0 # Horizontal Movement
@@ -33,6 +40,7 @@ grow = False # Controls wheather snake grows after eating food.
 
 running = True
 
+# This is called a game loop, in which it's a programming pattern that takes input, update game, render graphics, then repeat.
 while running and not game_over:
 
 # Start of event loop
@@ -46,6 +54,7 @@ while running and not game_over:
             # so x-axis is the same with math and computer graphics but the y direction is opposite.
             # In computer graphics (0,0) starts at the top left corner and thus increases in size with increasing y-axis and x-axis.
             # Resulting in y-axis increasing but the direction is going down on the computer graphics coordinate plane.
+            # Increasing y means moving downward.
 
             if event.key == pygame.K_UP:
                 dx = 0
@@ -84,7 +93,8 @@ while running and not game_over:
     if head.top < 0 or head.bottom > Height:
         game_over = True
 
-    # Check if snake eats itself
+    # Check if snake eats itself, the program checks if object A crossed over with object B.
+    # This is a basic collision algorithm, detects when two shapes overlap
     for block in snake[1:]:
         if head.colliderect(block):
             game_over = True
@@ -92,22 +102,26 @@ while running and not game_over:
     # If statement to check if the snake ate the food.
     if snake[0].colliderect(food):
         score += 100
-        print("Score:", score)
+        print("Score:", score) # Techincally Debugging and Testing, since it checks variable values, logic errors, and behavior. 
+                               # Usage of logging systems, unit testing, and debuggers was not necessarily 
         
         # Grow snake
         grow = True
         
-         # Move food to a new location
+         # Move food to a new location (Creation of food generation algorithm)
+         # Usage of random number generation. 
         food.x = random.randrange(0, Width - 20, 20)
         food.y = random.randrange(0, Height - 20, 20)
 
     # Win condition
+    # Usage of Boolean logic explicitly here (AND, OR, NOT, conditional execution, are used here and sprinkled elsewhere in program).
     if score >= 1000:
         game_over = True
         win = True
 
 
     # This is the drawing Section ---
+    # This is Graphics programming with pygame.draw.rect(), this renders objects, colors, frames, and screen refresing in the drawing Section.
     screen.fill ((0, 0, 0)) # Black background
     for block in snake: 
         pygame.draw.rect(screen, (0,255,0), block)
@@ -132,6 +146,7 @@ while running and not game_over:
     clock.tick(10)
 
 
+# This is Error Handling / Program Termination by cleaning resources, and proper program shutdown.
 pygame.quit()
 sys.exit()
 
