@@ -36,38 +36,62 @@ win = False
 
 dx = 0 # Horizontal Movement
 dy = 0 # Vertical Movement
-grow = False # Controls wheather snake grows after eating food.
+direction_of_snake = None # The direction of snake is based on user input, including at the start. Variable needs to equal to None, and then user input replaces None value.
+                          # In python, variable none = null in programming.
 
+grow = False # Controls wheather snake grows after eating food.
 running = True
 
 # This is called a game loop, in which it's a programming pattern that takes input, update game, render graphics, then repeat.
 while running and not game_over:
 
 # Start of event loop
-    for event in pygame.event.get(): # (Keyboard input)
+    for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         
-        # Listen for arrowkeys for movement 
+        # Listen for arrowkeys for movement (The arrow input section from user.)
+        # so x-axis is the same with math and computer graphics but the y direction is opposite.
+        # In computer graphics (0,0) starts at the top left corner and thus increases in size with increasing y-axis and x-axis.
+        # Resulting in y-axis increasing but the direction is going down on the computer graphics coordinate plane.
+        # Increasing y means moving downward.
+        
         if event.type == pygame.KEYDOWN:
 
-            # so x-axis is the same with math and computer graphics but the y direction is opposite.
-            # In computer graphics (0,0) starts at the top left corner and thus increases in size with increasing y-axis and x-axis.
-            # Resulting in y-axis increasing but the direction is going down on the computer graphics coordinate plane.
-            # Increasing y means moving downward.
-
             if event.key == pygame.K_UP:
-                dx = 0
-                dy = -speed
+                if direction_of_snake!= "DOWN":
+                    direction_of_snake = "UP"
+
             elif event.key == pygame.K_DOWN:
-                dx = 0
-                dy = speed
+                if direction_of_snake  != "UP":
+                    direction_of_snake = "DOWN"
+
             elif event.key == pygame.K_LEFT:
-                dx = -speed
-                dy = 0 
+                if direction_of_snake != "RIGHT":
+                    direction_of_snake = "LEFT"
+
             elif event.key == pygame.K_RIGHT:
-                dx = speed
-                dy = 0 
+                if direction_of_snake != "LEFT":
+                    direction_of_snake = "RIGHT"
+
+        # FOR LOOP CLOSES HERE #
+    
+    # Direction of snake values
+    if direction_of_snake == "UP":
+            dx = 0
+            dy = -speed
+
+    elif direction_of_snake == "DOWN":
+            dx = 0
+            dy = speed
+        
+    elif direction_of_snake == "LEFT":
+            dx = -speed
+            dy = 0
+
+    elif direction_of_snake == "RIGHT":
+            dx = speed
+            dy = 0
 
     # Create a new head position
     new_head = snake[0].copy()
@@ -144,7 +168,9 @@ while running and not game_over:
     pygame.display.flip()
 
     clock.tick(10)
-
+# The game while loop ends here
+# Direction_of_snake is updated inside the for event loop, while dx and dy are updated outside the for event loop but still inside 
+# the while loop and not in the game_over: boolean variable.
 
 # This is Error Handling / Program Termination by cleaning resources, and proper program shutdown.
 pygame.quit()
