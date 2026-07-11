@@ -1,0 +1,173 @@
+7/11/2026
+
+Snake game was seperated into classes, now the next stop is to add Pac-Man code into Snake
+
+- This will be done by expanding the arcitecture of the project layout.
+
+Your current design:
+
+Snake_Game/
+│
+├── main.py              # Runs the game
+├── snake.py             # Snake object
+├── food.py              # Food object
+├── game_manager.py      # Win/Lose states
+└── settings.py          # Constants
+
+- For Snake → Pac-Man, the next level design would be 
+
+Gaming_Project/
+│
+├── main.py                  # Starts the whole application
+│
+├── game_manager.py          # Controls switching games
+│
+├── snake_game/
+│   ├── snake.py
+│   ├── food.py
+│   └── snake_manager.py
+│
+├── pacman_game/
+│   ├── pacman.py
+│   ├── ghost.py
+│   ├── maze.py
+│   └── pacman_manager.py
+│
+└── settings.py
+
+* Thus, main.py should not know how Snake or Pac-Man works.
+* Main only asks, "Which game am I currently running?
+
+- The game manager becomes the controller:
+
+GameManager
+
+Current State:
+
+SNAKE
+ |
+ | Player wins
+ ↓
+PACMAN
+ |
+ | Player wins
+ ↓
+COMPLETE
+
+(This is called State Machine)
+
+///////////////////////////////////////////////////////////
+
+The game flow goes as follows:
+
+Program starts
+
+      |
+      v
+ Snake Game
+
+      |
+      v
+ score >= 1000 (whatever score needed to progress)
+
+      |
+      v
+Pac-Man Game
+
+      |
+      v
+ win condition
+
+      |
+      v
+You beat the entire game
+
+
+* Layout steps to expand architecture:
+
+1) Create a Pac-Man Folder (create the necessary files for the Pac-Man Folder)
+- Examples include, 
+
+pacman.py
+ghost.py
+maze.py
+
+2) Create a Pacman class (would be in the pacman.py file)
+- Similar to the snake class, code snippet can look like this:
+
+class PacMan:
+
+    def __init__(self):
+        self.rect = pygame.Rect(100,100,20,20)
+        self.direction = "RIGHT"
+
+
+    def move(self):
+
+        if self.direction == "RIGHT":
+            self.rect.x += 20
+
+        elif self.direction == "LEFT":
+            self.rect.x -= 20
+
+- There is simiilarity when noticing code,
+
+Snake:
+
+self.body
+self.direction
+move()
+
+Pac-Man:
+
+self.rect
+self.direction
+move()
+
+3. Add the game status, (Game Manager changes from 
+game_over = False
+win = False) into state = "SNAKE" which then goes to 
+
+if state == "SNAKE":
+    run snake
+
+elif state == "PACMAN":
+    run pacman
+
+************************************ Recap of the project before adding Pac-Man and expansion: ************************************
+
+The snake project already has:
+
+- Object Oriented Programming:
+* Snake class
+* Food class
+* GameManager class
+
+- Seperation of concerns:
+* Snake handles snake
+* Food handles food
+* Main coordinates
+
+Now adding Pac-Man includes:
+
+- State Machine:
+* Snake state
+* Pac-Man state
+* Completet state
+
+- Modular architecture:
+* Seperate game modules
+
+- Reusable design:
+* Both follow similar structures
+
+/////
+The project is moving from 
+
+single application
+
+to:
+
+system containing multiple subsystems
+
+The Snake game is now one subsystem. Pac-Man becomes another subsystem. The GameManager is the system that coordinates them, when expansion complete. 
