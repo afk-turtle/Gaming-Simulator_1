@@ -1,0 +1,86 @@
+Expanding game architecture implementation pt.1 
+
+- Initial Map Progress checker
+- Displayed progress in git_hub 
+- Name of git commit is "Expanding game architecture implementation pt.1 (Initial Map Progress checker)"
+
+PAC-MAN MAZE SYSTEM STATUS
+
+Completed:
+
+1. Grid System
+- Game window: 600x600 pixels
+- Tile size: 20x20 pixels
+- Maze uses a 30x30 tile grid
+
+
+2. Border Wall Generation
+- Creates walls around the entire game window.
+- Prevents Pac-Man and ghosts from leaving the screen.
+- Stores walls inside the maze wall list.
+
+
+3. Ghost House Generation
+- Creates a centered ghost starting area.
+- Stores ghost house walls separately from normal maze walls.
+- Will later be used for ghost spawning and movement.
+
+
+4. Pellet Generation
+- Creates pellets throughout the maze.
+- Stores all pellets inside a pellet list.
+- Pac-Man will remove pellets when collected.
+
+
+5. Maze Collision System
+- Maze handles collision checking using is_wall().
+- Pac-Man does not directly check every wall.
+- This keeps responsibilities separated and allows easier dynamic maze generation later.
+
+
+Current Maze Structure:
+
+Maze
+ |
+ |-- Border Walls
+ |
+ |-- Ghost House
+ |
+ |-- Pellets
+ |
+ |-- Collision Detection
+
+
+Not Implemented Yet:
+
+- Pac-Man class
+  - Player movement
+  - Direction control
+  - Wall collision
+  - Pellet collection
+
+
+- Ghost class
+  - Ghost movement
+  - Ghost AI
+  - Ghost house release
+
+
+- Score System
+  - Increase score when pellets are eaten
+  - Track level completion
+
+
+- Power Pellets
+  - Four corner power pellets
+  - Temporary ghost vulnerability
+
+
+- Interior Maze Generation
+  - Add internal walls
+  - Create different level layouts
+  - Support dynamic/rule-based maze generation
+
+
+Next Step:
+Create pacman.py and connect Pac-Man movement with Maze collision.

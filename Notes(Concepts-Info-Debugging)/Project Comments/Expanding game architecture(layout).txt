@@ -1,6 +1,6 @@
 7/11/2026
 
-Snake game was seperated into classes, now the next stop is to add Pac-Man code into Snake
+Snake game was seperated into classes, now the next stop is to add Pac-Man code into the overall game system.
 
 - This will be done by expanding the arcitecture of the project layout.
 
