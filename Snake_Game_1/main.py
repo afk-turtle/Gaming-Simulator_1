@@ -65,6 +65,23 @@ while running and not game.game_over:
     # Updates the snake position based on the current direction.
     snake.move()
 
+    # Check if the snake leaves the game window (wall check)
+    head = snake.body[0]
+
+    if (
+        head.left < 0 or
+        head.right > WIDTH or
+        head.top < 0 or
+        head.bottom > HEIGHT
+    ):
+        game.game_over = True
+
+    # Check if the snake head collides with it's body
+    for block in snake.body[1:]:                          # snake.body[1:] = body and tail ///  snake.body[0] = Head 
+        if head.colliderect(block):                      # Thus, this 'for' loop features a game over for Head touching every other body segment.
+            game.game_over = True
+    
+
      # Collusion detection, in other words, checks if the snake head overlaps/touches the food object.
     if snake.body[0].colliderect(food.rect):
         game.score += 100 # Score increase when snake eats/touches food
