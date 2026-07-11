@@ -1,0 +1,21 @@
+Navigating Terminal commands
+
+Info regarding terminals, 
+A terminal is just a visual window that can host and display different command languages, including Windows Command Prompt, PowerShell, or Linux Bash.
+Because it acts like a universal screen, you can switch the backend language inside the same VS Code terminal panel depending on your project needs.
+
+- Right now, we are running windows command prompt (cmd), other  command languages include
+- Windows PowerShell
+- Linux/Bash (if you have Git Bash or Windows Subsystem for Linux installed)
+
+
+# For navigating in the terminal, can  do The command cd .. stands for "change directory" 
+# This uses two dots to represent the parent folder, moving your terminal exactly one level up in the file hierarchy. 
+
+
+Essential Navigation sheet 
+cd ..        - Moves you exactly one level up to the parent folder,
+cd           - Jump straight back to your main user home folder. # Do not use cd alone in Windows Command Prompt to go home, because it only prints your current path; use it in Mac, Linux, or PowerShell instead.
+cd ~         – Another way to jump directly to your home folder.
+ls           – List all files and folders in your current directory.
+pwd          – Print the exact folder path you are currently looking at.
