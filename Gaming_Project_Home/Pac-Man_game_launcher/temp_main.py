@@ -19,11 +19,69 @@ pygame.display.set_caption("Pac-Man Maze Test")
 
 clock = pygame.time.Clock()
 
+# Game States: 
+PLAYING = 0
+LEVEL_COMPLETE = 1
+game_state = PLAYING
+
+# Map level starter
+current_level = 1
+
 # Create Maze object
-maze = Maze(1)
+maze = Maze(current_level)
 pacman = PacMan()
 ghosts = [Ghost(260,220), Ghost(280,220), Ghost(300,220), Ghost(320,220)]
 
+# Level Complete Menu
+selected_option = 0
+
+options = [
+    "Continue to Level 2",
+    "Quit Game"
+]
+
+
+def draw_level_complete(screen):
+
+    font = pygame.font.Font(None, 50)
+
+    # Title
+    title = font.render(
+        "Level Complete!",
+        True,
+        (255,255,255)
+    )
+
+    screen.blit(
+        title,
+        (150,150)
+    )
+
+
+    # Draw options
+    for index, option in enumerate(options):
+
+        color = (255,255,255)
+
+        # Highlight selected option
+        if index == selected_option:
+            color = (0,255,0)
+
+
+        text = font.render(
+            option,
+            True,
+            color
+        )
+
+        screen.blit(
+            text,
+            (150,250 + index * 60)
+        )
+
+
+
+# //////////////////////////////////
 running = True
 
 while running: 
@@ -62,8 +120,19 @@ while running:
     # Draw background
     screen.fill ((0,0,0))
 
-    # Draw maze objects
-    maze.draw(screen)
+     # Level 1 gameplay
+    if game_state == PLAYING:
+        # Draw maze objects
+        maze.draw(screen)
+
+    # Level 1 complete
+        if maze.level_complete():
+            if current_level == 1:
+                game_state = LEVEL_COMPLETE
+
+    # Level complete menu
+    elif game_state == LEVEL_COMPLETE:
+        draw_level_complete(screen)
 
     # Draw pacman
     pacman.draw(screen)

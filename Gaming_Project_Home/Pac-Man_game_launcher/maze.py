@@ -22,6 +22,9 @@ class Maze:
     def __init__(self, level):
        
        self.level = level # Stores Pac-Man level
+
+       def level_complete(self):
+           return len(self.pellets) == 0
        
        # Store maze objects
        self.border_walls = []
@@ -260,6 +263,16 @@ class Maze:
         start_x = (WIDTH - house_width) // 2 # usage of '//' because this returns an integer, the usage of single '/' returns a float
         start_y = (HEIGHT - house_height) // 2
 
+         # Interior area of ghost house
+        self.ghost_area = pygame.Rect(
+            start_x + TILE_SIZE,
+            start_y + TILE_SIZE,
+            house_width - (TILE_SIZE * 2),
+            house_height - (TILE_SIZE * 2)
+        )
+
+
+
         # Top wall of the ghost house
         self.ghost_house.append(
             pygame.Rect(
@@ -301,7 +314,16 @@ class Maze:
         )
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////// #
+# level complete function
+    def level_complete(self):
 
+    # If there are no pellets left, the level is complete
+        if len(self.pellets) == 0:
+            return True
+
+        return False
+    
+#///////////////////////
     def create_pellets(self):
         # Creates pellets through the maze
         # Pellets cannot spawn inside walls or the ghost house.
@@ -318,7 +340,7 @@ class Maze:
 
                 # Check if pellet location is blocked by a wall
 
-                if not self.is_wall(pellet):
+                if not self.is_wall(pellet) and not self.ghost_area.colliderect(pellet):
                     self.pellets.append(pellet)
 
     # /////////////////////////
