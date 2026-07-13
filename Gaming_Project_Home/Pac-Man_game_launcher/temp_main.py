@@ -24,6 +24,7 @@ PLAYING = 0
 LEVEL_COMPLETE = 1
 game_state = PLAYING
 
+
 # Map level starter
 current_level = 1
 
@@ -89,32 +90,75 @@ while running:
     # Event handling
     for event in pygame.event.get():
 
-        if event.type == pygame.KEYDOWN:
-            
-            if event.key == pygame.K_UP:
-                pacman.change_direction("UP")
-
-            elif event.key == pygame.K_DOWN:
-                pacman.change_direction("DOWN")
-
-            elif event.key == pygame.K_LEFT:
-                pacman.change_direction("LEFT")
-
-            elif event.key == pygame.K_RIGHT:
-                pacman.change_direction("RIGHT")
-
+        # Close the game window
         if event.type == pygame.QUIT:
             running = False
+
+        # Keyboard input
+        if event.type == pygame.KEYDOWN:
+            
+            # Normal gameplay controls
+            if game_state == PLAYING:
+                
+                if event.key == pygame.K_UP:
+                    pacman.change_direction("UP")
+
+                elif event.key == pygame.K_DOWN:
+                    pacman.change_direction("DOWN")
+
+                elif event.key == pygame.K_LEFT:
+                    pacman.change_direction("LEFT")
+
+                elif event.key == pygame.K_RIGHT:
+                    pacman.change_direction("RIGHT")
+
+                # Level complete menu controls
+            elif game_state == LEVEL_COMPLETE:
+                if event.key == pygame.K_UP:
+                    selected_option -= 1
+
+                elif event.key == pygame.K_DOWN:
+                    selected_option += 1
+
+                # Keeps selection between 0 and 1
+                selected_option %= len(options)
+
+                # Select option
+                if event.key == pygame.K_RETURN:
+
+                    # Continue to Level 2
+                    if selected_option == 0:
+
+                        current_level = 2
+
+                        maze = Maze(current_level)
+
+                        game_state = PLAYING
+
+                        pacman = PacMan()
+
+                        ghosts = [
+                        Ghost(260,220),
+                        Ghost(280,220),
+                        Ghost(300,220),
+                        Ghost(320,220) ]
+
+                    # Quit 
+                    else:
+                        running = False
     
-    # Update pacman movement
-    pacman.move(maze)
+    # ///////
+    if game_state == PLAYING:
 
-    # Pacman eats pellets
-    pacman.eat_pellets(maze)
+        # Update pacman movement
+        pacman.move(maze)
 
-    # The 4 Ghosts movement
-    for ghost in ghosts:
-        ghost.move(maze)
+        # Pacman eats pellets
+        pacman.eat_pellets(maze)
+
+        # The 4 Ghosts movement
+        for ghost in ghosts:
+            ghost.move(maze)
 
     #///////////////////////////////////
     # Draw background
@@ -129,17 +173,20 @@ while running:
         if maze.level_complete():
             if current_level == 1:
                 game_state = LEVEL_COMPLETE
+                selected_option = 0
 
     # Level complete menu
     elif game_state == LEVEL_COMPLETE:
         draw_level_complete(screen)
 
-    # Draw pacman
-    pacman.draw(screen)
+    if game_state == PLAYING:
+        
+        # Draw pacman
+        pacman.draw(screen)
 
-    # Draw the 4 ghosts
-    for ghost in ghosts:
-        ghost.draw(screen)
+        # Draw the 4 ghosts
+        for ghost in ghosts:
+            ghost.draw(screen)
 
     # Update display
     pygame.display.flip()
