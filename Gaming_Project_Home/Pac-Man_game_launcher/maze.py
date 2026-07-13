@@ -123,7 +123,8 @@ class Maze:
 
     def create_pellets(self):
         # Creates pellets through the maze
-        # Each tile receives one pellet.
+        # Pellets cannot spawn inside walls or the ghost house.
+
          for x in range(TILE_SIZE, WIDTH - TILE_SIZE, TILE_SIZE):
 
             for y in range(TILE_SIZE, HEIGHT - TILE_SIZE, TILE_SIZE):
@@ -134,7 +135,10 @@ class Maze:
                     5
                 )
 
-                self.pellets.append(pellet)
+                # Check if pellet location is blocked by a wall
+
+                if not self.is_wall(pellet):
+                    self.pellets.append(pellet)
 
     # /////////////////////////
     # new method of is_wall() is created here, checks if an object is touching any maze wall.
@@ -144,8 +148,14 @@ class Maze:
 
     def is_wall(self, object_rect):
 
+        # Checks normal maze walls.
         for wall in self.walls:
 
+            if object_rect.colliderect(wall):
+                return True
+            
+        # Checks ghost house walls
+        for wall in self.ghost_house:
             if object_rect.colliderect(wall):
                 return True
             
