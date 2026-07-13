@@ -16,47 +16,46 @@ class PacMan:
         self.direction = "RIGHT"
 
     # Updates Pac-Man's position.
-    def move(self):
+    def move(self, maze):
+
+        old_position = self.rect.copy()
 
         if self.direction == "UP":
             self.rect.y -= SPEED
 
-        if self.direction == "DOWN":
+        elif self.direction == "DOWN":
             self.rect.y += SPEED
 
-        if self.direction == "RIGHT":
+        elif self.direction == "RIGHT":
             self.rect.x += SPEED
 
-        if self.direction == "LEFT":
+        elif self.direction == "LEFT":
             self.rect.x -= SPEED
+
+        # Check collision with maze
+        if maze.is_wall(self.rect):
+
+            # Undo movement
+            self.rect = old_position
 
     # Changes Pac-Man's movement direction
     def change_direction(self, new_direction):
 
         self.direction = new_direction
 
-# /////////////////////////////////////////////////////////
-# This class gives
+    def eat_pellets(self, maze):
 
-# ✅ Constructor (__init__)
-# ✅ Position (self.rect)
-# ✅ Direction (self.direction)
-# ✅ Movement (move())
-# ✅ Direction changes (change_direction())
+        for pellet in maze.pellets[:]:
 
-# How it compares to your Snake class
-# The biggest difference is:
+            if self.rect.colliderect(pellet):
 
-# For Snake, 
+                maze.pellets.remove(pellet)
 
-# self.body = [
-#    pygame.Rect(100,100,20,20)
-# ]
+    def draw(self, screen):
 
-# because the snake has multiple body segments.
-
-# For Pac-Man,
-
-# self.rect = pygame.Rect(100,100,20,20)
-
-# Because Pac-Man is just one object.
+        pygame.draw.circle(
+            screen,
+            (255,255,0),
+            self.rect.center,
+            10
+        )

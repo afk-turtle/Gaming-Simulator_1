@@ -7,6 +7,8 @@ import pygame
 import sys
 from maze import Maze
 from tempsettings import WIDTH, HEIGHT
+from pacman import PacMan
+from ghost import Ghost
 
 pygame.init()
 
@@ -18,7 +20,9 @@ pygame.display.set_caption("Pac-Man Maze Test")
 clock = pygame.time.Clock()
 
 # Create Maze object
-maze = Maze()
+maze = Maze(1)
+pacman = PacMan()
+ghosts = [Ghost(260,220), Ghost(280,220), Ghost(300,220), Ghost(320,220)]
 
 running = True
 
@@ -27,20 +31,52 @@ while running:
     # Event handling
     for event in pygame.event.get():
 
+        if event.type == pygame.KEYDOWN:
+            
+            if event.key == pygame.K_UP:
+                pacman.change_direction("UP")
+
+            elif event.key == pygame.K_DOWN:
+                pacman.change_direction("DOWN")
+
+            elif event.key == pygame.K_LEFT:
+                pacman.change_direction("LEFT")
+
+            elif event.key == pygame.K_RIGHT:
+                pacman.change_direction("RIGHT")
+
         if event.type == pygame.QUIT:
             running = False
+    
+    # Update pacman movement
+    pacman.move(maze)
 
+    # Pacman eats pellets
+    pacman.eat_pellets(maze)
+
+    # The 4 Ghosts movement
+    for ghost in ghosts:
+        ghost.move(maze)
+
+    #///////////////////////////////////
     # Draw background
     screen.fill ((0,0,0))
 
     # Draw maze objects
     maze.draw(screen)
 
+    # Draw pacman
+    pacman.draw(screen)
+
+    # Draw the 4 ghosts
+    for ghost in ghosts:
+        ghost.draw(screen)
+
     # Update display
     pygame.display.flip()
 
     # Limit FPS
-    clock.tick(60)
+    clock.tick(20)
 
 pygame.quit()
 sys.exit()
