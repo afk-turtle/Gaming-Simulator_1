@@ -1,5 +1,5 @@
 import pygame
-from tempsettings import SPEED
+from settings import SPEED
 
 class Ghost:
 
