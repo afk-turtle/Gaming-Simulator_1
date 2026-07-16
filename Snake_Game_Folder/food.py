@@ -2,7 +2,7 @@
 
 import pygame
 import random
-from settings_snake import WIDTH, HEIGHT
+from Snake_Game_Folder.settings_snake import WIDTH, HEIGHT
 
 class Food:
 

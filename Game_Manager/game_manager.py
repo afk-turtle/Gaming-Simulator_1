@@ -2,14 +2,14 @@ import pygame
 
 
 # Import Snake classes
-from Snake_Game_1.snake import Snake
-from Snake_Game_1.food import Food
+from Snake_Game_Folder.snake import Snake
+from Snake_Game_Folder.food import Food
 
 
 # Import Pac-Man classes
-from PacMan_game_launcher.pacman import PacMan
-from PacMan_game_launcher.maze import Maze
-from PacMan_game_launcher.ghost import Ghost
+from PacMan_Game_Folder.pacman import PacMan
+from PacMan_Game_Folder.maze import Maze
+from PacMan_Game_Folder.ghost import Ghost
 
 
 

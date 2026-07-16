@@ -2,7 +2,7 @@
 # Do this by creating a snake class
 
 import pygame
-from settings_snake import SPEED
+from Snake_Game_Folder.settings_snake import SPEED
 
 class Snake: 
     

@@ -2,7 +2,7 @@
 # Since the Snake class is already working, the simplest way to begin is to make a PacMan class that has the same basic structure.
 
 import pygame
-from settings_pacman import SPEED
+from PacMan_Game_Folder.settings_pacman import SPEED
 
 class PacMan:
 
