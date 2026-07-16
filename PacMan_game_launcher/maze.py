@@ -15,7 +15,7 @@
 
 import pygame
 import random
-from settings import WIDTH, HEIGHT, TILE_SIZE, BLUE, YELLOW, RED
+from settings_pacman import WIDTH, HEIGHT, TILE_SIZE, BLUE, YELLOW, RED
 
 class Maze:
 

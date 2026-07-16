@@ -1,5 +1,5 @@
 import pygame
-from settings import SPEED
+from settings_pacman import SPEED
 
 class Ghost:
 
